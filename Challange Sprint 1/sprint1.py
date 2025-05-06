@@ -129,6 +129,44 @@ def cancelarConsulta():
     print("CANCELAMENTOS\n".center(50))
     print("-"*50)
 
+    for consulta in consultas:
+        print(f"Número da consulta: {consulta['NumeroConsulta']}")
+        print(f"Dr(a).: {consulta['NomeDoutor']}")
+        print(f"Data da consulta: {consulta['Data']}")
+        print(f"Especialidade: {consulta['Especialidade']}\n")
+
+    selecaoConsulta = input('Digite o numero da consulta que você deseja cancelar: ')
+
+    consultaEncontrada = None
+    for consulta in consultas:
+        if selecaoConsulta == consulta['NumeroConsulta']:
+            consultaEncontrada = consulta
+            break
+
+    if consultaEncontrada:
+        limparTela()
+        print('Consulta encontrada!\n')
+        print('Tem certeza que deseja sair?\n')
+        selecao = input("[S]im ou [N]ão: ").upper()
+
+        match selecao:
+            case 'S':
+                limparTela()
+                consultas.remove(consulta)
+                print("Consulta Cancelada com Sucesso!\n")
+
+                input("Digite qualquer tecla para voltar: ")
+                telemedicina()
+            case 'N':
+                limparTela()
+                print('Retornando...')
+                time.sleep(2)
+                telemedicina()
+    else:
+        print('Consulta não encontrada')
+        input("Digite qualquer tecla para voltar: ")
+        telemedicina()
+
 def duvidas():
     limparTela()
     print("MENU DE TÓPICOS".center(50))
