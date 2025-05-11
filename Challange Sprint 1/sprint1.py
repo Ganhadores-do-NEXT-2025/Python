@@ -21,7 +21,13 @@ def listaMenu():
     print("3. ❓ Dúvidas")
     print("4. 🚪 Sair\n")
 
-    selecao = int(input("Digite qual opção deseja escolher: "))
+    try:
+        selecao = int(input("Digite qual opção deseja escolher: "))
+    except ValueError:
+        print("Valor inválida! Por favor, digite apenas números.\n")
+        time.sleep(2)
+        listaMenu()
+        return
 
     match selecao:
         case 1:
@@ -34,8 +40,7 @@ def listaMenu():
             desligar()
         case _:
             print("Opção Inválida! Tente novamente... \n")
-            time.sleep(3)
-            os.system('cls')
+            time.sleep(2)
             listaMenu()
 
 
@@ -61,7 +66,13 @@ def telemedicina():
     print("3. ❌ Cancelar consulta")
     print("4. Voltar\n")
 
-    selecao = int(input("Digite qual opção deseja escolher: "))
+    try:
+        selecao = int(input("Digite qual opção deseja escolher: "))
+    except ValueError:
+        print("Valor inválida! Por favor, digite apenas números.\n")
+        time.sleep(2)
+        telemedicina
+        return
 
     match selecao:
         case 1:
@@ -91,6 +102,13 @@ def meusAgendamentos():
     input("Digite qualquer tecla para voltar: ")
     telemedicina()
 
+def atualizar_data_consulta(numero, nova_data):
+    for consulta in consultas:
+        if consulta['NumeroConsulta'] == numero:
+            consulta['Data'] = nova_data
+            return True
+    return False
+
 def reagendarConsulta():
     limparTela()
     print("REAGENDAMENTOS".center(50))
@@ -102,28 +120,16 @@ def reagendarConsulta():
         print(f"Data da Consulta: {consulta['Data']}")
         print(f"Especialidade: {consulta['Especialidade']}\n")
 
-    selecaoConsulta = input('Digite o numero da consulta que você deseja reagendar: ')
+    selecaoConsulta = input('Digite o número da consulta que você deseja reagendar: ')
+    nova_data = input('Digite a nova data (formato: 01/01/25 - 00h30): ')
 
-    consultaEncontrada = None
-    for consulta in consultas:
-        if consulta['NumeroConsulta'] == selecaoConsulta:
-            consultaEncontrada = consulta
-            break
-    
-    if consultaEncontrada:
-        print(f'Consulta de numero {consulta["NumeroConsulta"]} encontrada!')
-        nova_data = input('\nDigite qual a data desejada(Siga o padrão "01/01/25 - 00h30"): ')
-
-        consulta['Data'] = nova_data
+    if atualizar_data_consulta(selecaoConsulta, nova_data):
         limparTela()
-        print("Data alterada com sucesso!\n")
-        input("Digite qualquer tecla para voltar: ")
-        telemedicina()
-    else: 
-        limparTela
-        print("\nNumero de consulta não encontrado")
-        time.sleep(2)
-        telemedicina()
+        print("Consulta reagendada com sucesso!\n")
+    else:
+        print("Número da consulta não encontrado.\n")
+    input("Digite qualquer tecla para voltar: ")
+    telemedicina()
 
 def cancelarConsulta():
     print("CANCELAMENTOS\n".center(50))
