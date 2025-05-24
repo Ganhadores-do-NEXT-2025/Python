@@ -1,19 +1,19 @@
 import os, time
 
 consultas = [
-            {'NumeroConsulta':'000001','NomeDoutor':'Dr. Gabriel Azevedo','Data':'25/07/25 - 13h00','Especialidade':'Cardiologista'},
-            {'NumeroConsulta':'000002','NomeDoutor':'Dra. Isabella Azevedo','Data':'20/08/25 - 17h30','Especialidade':'Psiquiatra'}
+            {'numero_consulta':'000001','nome_doutor':'Dr. Gabriel Azevedo','data':'25/07/25 - 13h00','especialidade':'Cardiologista'},
+            {'numero_consulta':'000002','nome_doutor':'Dra. Isabella Azevedo','data':'20/08/25 - 17h30','especialidade':'Psiquiatra'}
             ]
 
 historicos = [
-            {'Data':'01/01/25 - 10h00', 'NomeDoutor':'Dr. Gabriel Azevedo','Especialidade':'Cardiologista'},
-            {'Data':'02/02/25 - 20h00', 'NomeDoutor':'Dr. Isabella Azevedo','Especialidade':'Psiquiatra'}]
+            {'data':'01/01/25 - 10h00', 'nome_doutor':'Dr. Gabriel Azevedo','especialidade':'Cardiologista'},
+            {'data':'02/02/25 - 20h00', 'nome_doutor':'Dr. Isabella Azevedo','especialidade':'Psiquiatra'}]
 
-def limparTela():
+def limpar_tela():
     os.system('cls')
 
-def listaMenu():
-    limparTela()
+def lista_menu():
+    limpar_tela()
     print("Bem-Vindo ao Agendador do hospital das clínicas".center(50))
     print("-"*50)
     print("1. 📅 Historico de Consultas")
@@ -24,14 +24,14 @@ def listaMenu():
     try:
         selecao = int(input("Digite qual opção deseja escolher: "))
     except ValueError:
-        print("Valor inválida! Por favor, digite apenas números.\n")
+        print("Valor inválido! Por favor, digite apenas números.\n")
         time.sleep(2)
-        listaMenu()
+        lista_menu()
         return
 
     match selecao:
         case 1:
-            historicoConsultas()
+            historico_consultas()
         case 2:
             telemedicina()
         case 3:
@@ -41,24 +41,24 @@ def listaMenu():
         case _:
             print("Opção Inválida! Tente novamente... \n")
             time.sleep(2)
-            listaMenu()
+            lista_menu()
 
 
-def historicoConsultas():
-    limparTela()
+def historico_consultas():
+    limpar_tela()
     print("HISTORICO DE CONSULTAS".center(50))
     print("-"*50)
     print("Veja abaixo as suas ultimas consultas\n")
     for historico in historicos:
-        print(f'Data: {historico['Data']}')
-        print(f'Dr(a): {historico['NomeDoutor']}')
-        print(f'Especialidade: {historico['Especialidade']}\n')
+        print(f"Data: {historico['data']}")
+        print(f"Dr(a): {historico['nome_doutor']}")
+        print(f"Especialidade: {historico['especialidade']}\n")
     
     input("Digite qualquer tecla para voltar: ")
-    listaMenu()
+    lista_menu()
 
 def telemedicina():
-    limparTela()
+    limpar_tela()
     print("TELEMEDICINA".center(50))
     print("-"*50)
     print("1. 📅 Meus agendamentos")
@@ -69,102 +69,102 @@ def telemedicina():
     try:
         selecao = int(input("Digite qual opção deseja escolher: "))
     except ValueError:
-        print("Valor inválida! Por favor, digite apenas números.\n")
+        print("Valor inválido! Por favor, digite apenas números.\n")
         time.sleep(2)
-        telemedicina
+        telemedicina()
         return
 
     match selecao:
         case 1:
-            meusAgendamentos()
+            meus_agendamentos()
         case 2:
-            reagendarConsulta()
+            reagendar_consulta()
         case 3:
-            cancelarConsulta()
+            cancelar_consulta()
         case 4:
-            listaMenu()
+            lista_menu()
         case _:
             print("Opção Inválida! Tente novamente... \n")
             time.sleep(3)
             os.system('cls')
             telemedicina()
 
-def meusAgendamentos():
-    limparTela()
+def meus_agendamentos():
+    limpar_tela()
     print("MEUS AGENDAMENTOS".center(50))
     print("-"*50)
     for consulta in consultas:
-        print(f"Numero da Consulta: {consulta['NumeroConsulta']}")
-        print(f"Dr(a): {consulta['NomeDoutor']}")
-        print(f"Data da Consulta: {consulta['Data']}")
-        print(f"Especialidade: {consulta['Especialidade']}\n")
+        print(f"Numero da Consulta: {consulta['numero_consulta']}")
+        print(f"Dr(a): {consulta['nome_doutor']}")
+        print(f"Data da Consulta: {consulta['data']}")
+        print(f"Especialidade: {consulta['especialidade']}\n")
 
     input("Digite qualquer tecla para voltar: ")
     telemedicina()
 
 def atualizar_data_consulta(numero, nova_data):
     for consulta in consultas:
-        if consulta['NumeroConsulta'] == numero:
-            consulta['Data'] = nova_data
+        if consulta['numero_consulta'] == numero:
+            consulta['data'] = nova_data
             return True
     return False
 
-def reagendarConsulta():
-    limparTela()
+def reagendar_consulta():
+    limpar_tela()
     print("REAGENDAMENTOS".center(50))
     print("-"*50)
 
     for consulta in consultas:
-        print(f"Numero da Consulta: {consulta['NumeroConsulta']}")
-        print(f"Dr(a): {consulta['NomeDoutor']}")
-        print(f"Data da Consulta: {consulta['Data']}")
-        print(f"Especialidade: {consulta['Especialidade']}\n")
+        print(f"Numero da Consulta: {consulta['numero_consulta']}")
+        print(f"Dr(a): {consulta['nome_doutor']}")
+        print(f"Data da Consulta: {consulta['data']}")
+        print(f"Especialidade: {consulta['especialidade']}\n")
 
-    selecaoConsulta = input('Digite o número da consulta que você deseja reagendar: ')
+    selecao_consulta = input('Digite o número da consulta que você deseja reagendar: ')
     nova_data = input('Digite a nova data (formato: 01/01/25 - 00h30): ')
 
-    if atualizar_data_consulta(selecaoConsulta, nova_data):
-        limparTela()
+    if atualizar_data_consulta(selecao_consulta, nova_data):
+        limpar_tela()
         print("Consulta reagendada com sucesso!\n")
     else:
         print("Número da consulta não encontrado.\n")
     input("Digite qualquer tecla para voltar: ")
     telemedicina()
 
-def cancelarConsulta():
+def cancelar_consulta():
     print("CANCELAMENTOS\n".center(50))
     print("-"*50)
 
     for consulta in consultas:
-        print(f"Número da consulta: {consulta['NumeroConsulta']}")
-        print(f"Dr(a).: {consulta['NomeDoutor']}")
-        print(f"Data da consulta: {consulta['Data']}")
-        print(f"Especialidade: {consulta['Especialidade']}\n")
+        print(f"Número da consulta: {consulta['numero_consulta']}")
+        print(f"Dr(a).: {consulta['nome_doutor']}")
+        print(f"Data da consulta: {consulta['data']}")
+        print(f"Especialidade: {consulta['especialidade']}\n")
 
-    selecaoConsulta = input('Digite o numero da consulta que você deseja cancelar: ')
+    selecao_consulta = input('Digite o numero da consulta que você deseja cancelar: ')
 
-    consultaEncontrada = None
+    consulta_encontrada = None
     for consulta in consultas:
-        if selecaoConsulta == consulta['NumeroConsulta']:
-            consultaEncontrada = consulta
+        if selecao_consulta == consulta['numero_consulta']:
+            consulta_encontrada = consulta
             break
 
-    if consultaEncontrada:
-        limparTela()
+    if consulta_encontrada:
+        limpar_tela()
         print('Consulta encontrada!\n')
         print('Tem certeza que deseja sair?\n')
         selecao = input("[S]im ou [N]ão: ").upper()
 
         match selecao:
             case 'S':
-                limparTela()
+                limpar_tela()
                 consultas.remove(consulta)
                 print("Consulta Cancelada com Sucesso!\n")
 
                 input("Digite qualquer tecla para voltar: ")
                 telemedicina()
             case 'N':
-                limparTela()
+                limpar_tela()
                 print('Retornando...')
                 time.sleep(2)
                 telemedicina()
@@ -174,7 +174,7 @@ def cancelarConsulta():
         telemedicina()
 
 def duvidas():
-    limparTela()
+    limpar_tela()
     print("MENU DE TÓPICOS".center(50))
     print("-"*50)
     print("1. 📌 Sobre o Programa")
@@ -189,22 +189,22 @@ def duvidas():
 
     match selecao:
         case 1:
-            sobrePrograma()
+            sobre_programa()
         case 2:
-            acessePortal()
+            acesse_portal()
         case 3:
-            duvidasTele()
+            duvidas_tele()
         case 4:
-            gerenciarConsulta()
+            gerenciar_consulta()
         case 5:
-            duvidasTecnicas()
+            duvidas_tecnicas()
         case 6:
-            dadosEstatisticas()
+            dados_estatisticas()
         case 7:
-            listaMenu()
+            lista_menu()
 
-def sobrePrograma():
-    limparTela()
+def sobre_programa():
+    limpar_tela()
     print("📌 SOBRE O PROGRAMA".center(50))
     print("\nO que é Saúde Digital?")
     print("A Saúde Digital é uma iniciativa que utiliza tecnologia para proporcionar")
@@ -222,8 +222,8 @@ def sobrePrograma():
     input("Digite qualquer tecla para voltar: ")
     duvidas()
 
-def acessePortal():
-    limparTela()
+def acesse_portal():
+    limpar_tela()
     print("📱 ACESSO AO PORTAL".center(50))
     print("\nComo faço meu primeiro acesso ao Portal do Paciente?")
     print("1. Baixe o aplicativo 'Portal do Paciente HC' na Play Store (Android) ou App Store (iPhone)")
@@ -239,8 +239,8 @@ def acessePortal():
     input("Digite qualquer tecla para voltar: ")
     duvidas()
 
-def duvidasTele():
-    limparTela()
+def duvidas_tele():
+    limpar_tela()
     print("🏥 TELECONSULTAS".center(50))
     print("\nComo agendar uma teleconsulta?")
     print("1. Converse com seu médico para verificar a possibilidade de atendimento virtual")
@@ -259,8 +259,8 @@ def duvidasTele():
     input("Digite qualquer tecla para voltar: ")
     duvidas()
     
-def gerenciarConsulta():
-    limparTela()
+def gerenciar_consulta():
+    limpar_tela()
     print("🔄 GERENCIAMENTO DE CONSULTAS".center(50))
     print("\nComo reagendar uma consulta?")
     print("1. Acesse a seção 'Telemedicina' no aplicativo")
@@ -275,8 +275,8 @@ def gerenciarConsulta():
     input("Digite qualquer tecla para voltar: ")
     duvidas()
 
-def duvidasTecnicas():
-    limparTela()
+def duvidas_tecnicas():
+    limpar_tela()
     print("❓ DÚVIDAS TÉCNICAS".center(50))
     print("\nO que fazer se o aplicativo não funciona corretamente?")
     print("- Verifique sua conexão com a internet")
@@ -291,8 +291,8 @@ def duvidasTecnicas():
     input("Digite qualquer tecla para voltar: ")
     duvidas()
 
-def dadosEstatisticas():
-    limparTela()
+def dados_estatisticas():
+    limpar_tela()
     print("📊 DADOS E ESTATÍSTICAS".center(50))
     print("\nQual a taxa atual de absenteísmo nas teleconsultas?")
     print("O programa tem como meta reduzir a taxa de absenteísmo de 20% para")
@@ -306,18 +306,18 @@ def dadosEstatisticas():
     duvidas()
 
 def desligar():
-    limparTela()
+    limpar_tela()
     print("\nTem certeza que deseja sair?")
     selecao = input("[S]im ou [N]ão: ").upper()
 
     if selecao == "S":
-        limparTela()
+        limpar_tela()
         print("FINALIZANDO O PROGRAMA... ATÉ BREVE!".center(50))
         print("-"*50)
         time.sleep(3)
-        limparTela()
+        limpar_tela()
         exit()
     else:
-        listaMenu()
+        lista_menu()
 
-listaMenu()
+lista_menu()
